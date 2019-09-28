@@ -1,5 +1,94 @@
 module NewsAPI
 
-greet() = print("Hello World!")
+import HTTP
+using Dates
+using Parameters
+using JSON3
+
+function __init__()
+    if !haskey(ENV, "NEWS_API_KEY")
+        @warn "This package isn't usable without ENV[\"NEWS_API_KEY\"] defined."
+        @info "Visit https://newsapi.org to get an API key."
+    end
+end
+
+abstract type AbstractQuery end
+
+function add_params(query::String, aq::T; verbose=true) where {T <: AbstractQuery}
+    for field in fieldnames(T)
+        item = getfield(aq, field)
+        !isnothing(item) && (query *= "$field=$item&")
+    end
+    query *= "apiKey=" * ENV["NEWS_API_KEY"]
+    verbose && @info "Full query:" query
+    return query
+end
+
+function Base.show(io::IO, q::T) where {T <: AbstractQuery}
+    println(io, T)
+    for field in fieldnames(T)
+        item = getfield(q, field)
+        !isnothing(item) && println("  > $field:   $item")
+    end
+end
+
+
+#-----------------------------------------------------------------------# Sources
+@with_kw_noshow struct Sources <: AbstractQuery
+    category    = nothing
+    language    = nothing
+    country     = nothing
+end
+
+function HTTP.get(s::Sources; verbose=true)
+    query = add_params("https://newsapi.org/v2/sources?", s)
+    JSON3.read(HTTP.get(query).body).sources
+end
+
+"""
+    sources(; category=nothing, language=nothing, country=nothing, verbose=true)
+
+Return a vector of `Dict`s that describe each news source.
+"""
+sources(;verbose=true, kw...) = map(Dict, HTTP.get(Sources(;kw...); verbose=verbose))
+
+#-----------------------------------------------------------------------# TopHeadlines
+@with_kw_noshow struct TopHeadlines <: AbstractQuery
+    country     = nothing
+    category    = nothing
+    sources     = nothing
+    q           = nothing
+    pageSize    = nothing
+    page        = nothing
+end
+
+function HTTP.get(th::TopHeadlines; verbose=true)
+    query = add_params("https://newsapi.org/v2/top-headlines?", th; verbose=verbose)
+    return JSON3.read(HTTP.get(query).body).articles
+end
+
+topheadlines(;verbose=true, kw...) = map(Dict, HTTP.get(TopHeadlines(; kw...), verbose=verbose))
+
+#-----------------------------------------------------------------------# Everything
+@with_kw_noshow struct Everything <: AbstractQuery
+    q               = nothing
+    qInTitle        = nothing
+    sources         = nothing
+    domains         = nothing
+    excludeDomains  = nothing
+    from            = nothing
+    to              = nothing
+    language        = nothing
+    sortBy          = nothing
+    pageSize        = nothing
+    page            = nothing
+end
+
+function HTTP.get(e::Everything; verbose=true)
+    query = add_params("https://newsapi.org/v2/everything?", e; verbose=verbose)
+    return JSON3.read(HTTP.get(query).body).articles
+end
+
+everything(;verbose=true, kw...) = map(Dict, HTTP.get(Everything(;kw...); verbose=verbose))
 
 end # module

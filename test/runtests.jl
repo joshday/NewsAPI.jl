@@ -1,6 +1,7 @@
 using NewsAPI
 using Test
+using Dates
 
 @testset "NewsAPI.jl" begin
-    # Write your own tests here.
+    e = NewsAPI.Everything(q="bitcoin", from=now() - Day(1))
 end
