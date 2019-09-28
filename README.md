@@ -2,6 +2,8 @@
 
 # NewsAPI
 
+Powered by [NewsAPI.org](https://newsapi.org)
+
 ## Usage
 
 - First:
