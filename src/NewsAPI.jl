@@ -50,7 +50,7 @@ end
 
 Reference: https://newsapi.org/docs/endpoints/sources
 """
-sources(;verbose=true, kw...) = map(Dict, HTTP.get(Sources(;kw...); verbose=verbose))
+sources(;verbose=true, kw...) = HTTP.get(Sources(;kw...); verbose=verbose)
 
 #-----------------------------------------------------------------------# TopHeadlines
 @with_kw_noshow struct TopHeadlines <: AbstractQuery
@@ -72,7 +72,7 @@ end
 
 Reference: https://newsapi.org/docs/endpoints/top-headlines
 """
-topheadlines(;verbose=true, kw...) = map(Dict, HTTP.get(TopHeadlines(; kw...), verbose=verbose))
+topheadlines(;verbose=true, kw...) = HTTP.get(TopHeadlines(; kw...), verbose=verbose)
 
 #-----------------------------------------------------------------------# Everything
 @with_kw_noshow struct Everything <: AbstractQuery
@@ -100,6 +100,6 @@ end
 
 Reference: https://newsapi.org/docs/endpoints/everything
 """
-everything(;verbose=true, kw...) = map(Dict, HTTP.get(Everything(;kw...); verbose=verbose))
+everything(;verbose=true, kw...) = HTTP.get(Everything(;kw...); verbose=verbose)
 
 end # module

@@ -13,9 +13,16 @@ Add `ENV["NEWS_API_KEY"] = <key>` to `~/.julia/config/startup.jl`
 ```julia
 using NewsAPI, Dates, HTTP
 
-NewsAPI.sources()
+s = NewsAPI.sources()
 
-NewsAPI.everything(q="bitcoin", from=today() - Day(1))
+e = NewsAPI.everything(q="bitcoin", from=today() - Day(1))
 
-NewsAPI.topheadlines(country="us")
+h = NewsAPI.topheadlines(country="us")
+
+# Returned objects satisfy the Tables.jl interface
+using DataFrames
+
+DataFrame(s)
+DataFrame(e)
+DataFrame(h)
 ```
