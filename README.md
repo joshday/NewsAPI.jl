@@ -6,7 +6,7 @@ Powered by [NewsAPI.org](https://newsapi.org)
 
 ## First:
 
-Add `ENV["NEWS_API_KEY"] = <key>` to `~/julia/config/startup.jl`
+Add `ENV["NEWS_API_KEY"] = <key>` to `~/.julia/config/startup.jl`
 
 ## Then:
 
