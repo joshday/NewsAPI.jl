@@ -48,7 +48,7 @@ end
 """
     sources(; category=nothing, language=nothing, country=nothing, verbose=true)
 
-Return a vector of `Dict`s that describe each news source.
+Reference: https://newsapi.org/docs/endpoints/sources
 """
 sources(;verbose=true, kw...) = map(Dict, HTTP.get(Sources(;kw...); verbose=verbose))
 
@@ -67,6 +67,11 @@ function HTTP.get(th::TopHeadlines; verbose=true)
     return JSON3.read(HTTP.get(query).body).articles
 end
 
+"""
+    topheadlines(; country, category, sources, q, pageSize, page)
+
+Reference: https://newsapi.org/docs/endpoints/top-headlines
+"""
 topheadlines(;verbose=true, kw...) = map(Dict, HTTP.get(TopHeadlines(; kw...), verbose=verbose))
 
 #-----------------------------------------------------------------------# Everything
@@ -89,6 +94,12 @@ function HTTP.get(e::Everything; verbose=true)
     return JSON3.read(HTTP.get(query).body).articles
 end
 
+"""
+    everything(q, qInTitle, sources, domains, excludeDomains, from, to, language,
+               sortBy, pageSize, page)
+
+Reference: https://newsapi.org/docs/endpoints/everything
+"""
 everything(;verbose=true, kw...) = map(Dict, HTTP.get(Everything(;kw...); verbose=verbose))
 
 end # module

@@ -7,10 +7,7 @@
 
 Add `ENV["NEWS_API_KEY"] = <key>` to `~/julia/config/startup.jl`
 
-
-### Everything
-
-Reference: https://newsapi.org/docs/endpoints/everything
+- Then:
 
 ```julia
 using NewsAPI, Dates, HTTP
