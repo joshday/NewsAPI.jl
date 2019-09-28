@@ -3,5 +3,7 @@ using Test
 using Dates
 
 @testset "NewsAPI.jl" begin
-    e = NewsAPI.Everything(q="bitcoin", from=now() - Day(1))
+    @test length(NewsAPI.sources()) > 0
+    @test length(NewsAPI.everything(q="bitcoin", from=today() - Day(1))) > 0
+    @test length(NewsAPI.topheadlines(country="us")) > 0
 end
