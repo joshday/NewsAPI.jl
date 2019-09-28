@@ -4,13 +4,11 @@
 
 Powered by [NewsAPI.org](https://newsapi.org)
 
-## Usage
-
-- First:
+## First:
 
 Add `ENV["NEWS_API_KEY"] = <key>` to `~/julia/config/startup.jl`
 
-- Then:
+## Then:
 
 ```julia
 using NewsAPI, Dates, HTTP
