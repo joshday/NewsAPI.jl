@@ -12,6 +12,8 @@ function __init__()
     end
 end
 
+const auth_header = HTTP.Header["authorization" => ENV["NEWS_API_KEY"]]
+
 abstract type AbstractQuery end
 
 function add_params(query::String, aq::T; verbose=true) where {T <: AbstractQuery}
@@ -19,7 +21,7 @@ function add_params(query::String, aq::T; verbose=true) where {T <: AbstractQuer
         item = getfield(aq, field)
         !isnothing(item) && (query *= "$field=$item&")
     end
-    query *= "apiKey=" * ENV["NEWS_API_KEY"]
+    query = rstrip(query, '&')
     verbose && @info "Full query:" query
     return query
 end
@@ -42,7 +44,7 @@ end
 
 function HTTP.get(s::Sources; verbose=true)
     query = add_params("https://newsapi.org/v2/sources?", s)
-    JSON3.read(HTTP.get(query).body).sources
+    JSON3.read(HTTP.get(query, headers=auth_header).body).sources
 end
 
 """
@@ -64,7 +66,7 @@ end
 
 function HTTP.get(th::TopHeadlines; verbose=true)
     query = add_params("https://newsapi.org/v2/top-headlines?", th; verbose=verbose)
-    return JSON3.read(HTTP.get(query).body).articles
+    return JSON3.read(HTTP.get(query, headers=auth_header).body).articles
 end
 
 """
@@ -91,7 +93,7 @@ end
 
 function HTTP.get(e::Everything; verbose=true)
     query = add_params("https://newsapi.org/v2/everything?", e; verbose=verbose)
-    return JSON3.read(HTTP.get(query).body).articles
+    return JSON3.read(HTTP.get(query, headers=auth_header).body).articles
 end
 
 """
