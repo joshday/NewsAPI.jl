@@ -1,7 +1,7 @@
 name = "NewsAPI"
 uuid = "d145281a-7b66-43b1-b4e0-c06cc84e19a4"
 authors = ["Josh Day <emailjoshday@gmail.com>"]
-version = "0.1.1"
+version = "0.1.0"
 
 [deps]
 Dates = "ade2ca70-3891-5945-98fb-dc099432e06a"
