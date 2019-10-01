@@ -22,6 +22,8 @@ function add_params(query::String, aq::T; verbose=true) where {T <: AbstractQuer
         !isnothing(item) && (query *= "$field=$item&")
     end
     query = rstrip(query, '&')
+    query = replace(query, ' ' => "%20")
+    query = replace(query, "'" => "%27")
     verbose && @info "Full query:" query
     return query
 end
