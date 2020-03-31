@@ -11,7 +11,7 @@ Add `ENV["NEWS_API_KEY"] = <key>` to `~/.julia/config/startup.jl`
 ## Then:
 
 ```julia
-using NewsAPI, Date
+using NewsAPI, Dates
 
 s = NewsAPI.sources()
 
