@@ -46,7 +46,7 @@ end
 
 function HTTP.get(s::Sources; verbose=true)
     query = add_params("https://newsapi.org/v2/sources?", s)
-    JSON3.read(HTTP.get(query, headers=auth_header).body).sources
+    JSON3.read(HTTP.get(query, headers=auth_header).body)
 end
 
 """
@@ -68,7 +68,7 @@ end
 
 function HTTP.get(th::TopHeadlines; verbose=true)
     query = add_params("https://newsapi.org/v2/top-headlines?", th; verbose=verbose)
-    return JSON3.read(HTTP.get(query, headers=auth_header).body).articles
+    return JSON3.read(HTTP.get(query, headers=auth_header).body)
 end
 
 """
@@ -95,7 +95,7 @@ end
 
 function HTTP.get(e::Everything; verbose=true)
     query = add_params("https://newsapi.org/v2/everything?", e; verbose=verbose)
-    return JSON3.read(HTTP.get(query, headers=auth_header).body).articles
+    return JSON3.read(HTTP.get(query, headers=auth_header).body)
 end
 
 """
