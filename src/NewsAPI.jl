@@ -9,6 +9,7 @@ function __init__()
     if !haskey(ENV, "NEWS_API_KEY")
         @warn "This package isn't usable without ENV[\"NEWS_API_KEY\"] defined."
         @info "Visit https://newsapi.org to get an API key."
+        ENV["NEWS_API_KEY"] = "0"
     end
 end
 
