@@ -13,7 +13,7 @@ function __init__()
     end
 end
 
-const auth_header = HTTP.Header["authorization" => ENV["NEWS_API_KEY"]]
+const auth_header = HTTP.Header["authorization" => haskey(ENV, "NEWS_API_KEY") ? ENV["NEWS_API_KEY"] : "0"]
 
 abstract type AbstractQuery end
 
