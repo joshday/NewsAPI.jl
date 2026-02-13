@@ -1,0 +1,23 @@
+---
+title: "NewsAPI.jl"
+engine: julia
+---
+
+Welcome to the documentation for **NewsAPI.jl**.
+
+## Overview
+
+NewsAPI.jl is a Julia package that ...
+
+## Installation
+
+```julia
+using Pkg
+Pkg.add("NewsAPI")
+```
+
+## Quickstart
+
+```{julia}
+println("Hello, World!")
+```
